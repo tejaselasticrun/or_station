@@ -79,7 +79,7 @@
 				<option disabled selected value> Select Location</option>
 
                {#each location_list as loc }
-                 <option value="{loc[2]}" title="{loc[0]}">{loc[1]}</option>
+                 <option value="{loc[2]}" title="{loc[0]}">{loc[1]} / {loc[0]}</option>
    
                {/each}
 				
