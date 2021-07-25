@@ -20,20 +20,21 @@
 		//fetching and parsing station data 
 		const res = await fetch('./api/get_org');
 		if (res.ok)  lst1 = await res.json();
-		lst = lst1.map(x => x['org_name']);
-		for (let i = 0; i < lst.length; i++) 
-		{
-               temp_list[i] = lst[i];
+		// lst = lst1.map(x => x['org_name']);
+		for (let i = 0; i < lst1.length; i++) 
+		{      
+               lst = [];
+			   lst.push(lst1[i]['org_name']);
+			   lst.push(lst1[i]['org_id']);
+
+               temp_list[i] = lst;
         }
 
 		////////////////////////////////////////////////////////////////////////
 		//fetching and parcing 
 		const res2 = await fetch('./api/get_er_location');
 		if (res2.ok) loc_list= await res2.json();
-		//loc_list = loc_list.message;
-		console.log(loc_list.length);
-		console.log(loc_list);
-
+	
 		for (let i = 0; i < loc_list.length; i++) 
 		{
             //  temp_lst = loc_list[i];	 
@@ -65,7 +66,7 @@
 			>  
 			<option disabled selected value> select Organisation</option> 
 			{#each temp_list as temp }
-	          <option value="{temp}">{temp}</option>
+	          <option value="{temp[1]}">{temp[0]}</option>
             {/each}
 			</select>
 		</div>
