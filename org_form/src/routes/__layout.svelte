@@ -12,4 +12,4 @@
         font-weight: 700;
         font-size: 45px;
     }
-</style>   
+</style>    

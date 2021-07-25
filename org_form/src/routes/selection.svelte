@@ -6,27 +6,51 @@
 	let organisation;
 	let station;
 	let location;
-
+    /////////////////////////////////
 	let lst1;
 	let lst = [];
-	let temp_list=[];
+	export let temp_list=[];
+	////////////////////////////////////
+	let loc_list;
+	let temp_lst;
+	export let location_list = [];
 	
 	
 	onMount(async () => {
+		//fetching and parsing station data 
 		const res = await fetch('./api/get_org');
-		// console.log(res);
-		// console.log(res.body);
-		// lst1 = res.body;
-		// console.log(lst1);
 		if (res.ok)  lst1 = await res.json();
 		lst = lst1.map(x => x['org_name']);
 		for (let i = 0; i < lst.length; i++) 
 		{
                temp_list[i] = lst[i];
         }
+
+		////////////////////////////////////////////////////////////////////////
+		//fetching and parcing 
+		const res2 = await fetch('./api/get_er_location');
+		if (res2.ok) loc_list= await res2.json();
+		//loc_list = loc_list.message;
+		console.log(loc_list.length);
+		console.log(loc_list);
+
+		for (let i = 0; i < loc_list.length; i++) 
+		{
+            //  temp_lst = loc_list[i];	 
+			temp_lst = [];
+			temp_lst.push(loc_list[i]['location_name']);
+			temp_lst.push(loc_list[i]['location_code']);
+			temp_lst.push(loc_list[i]['location_id']);
+			location_list[i] = temp_lst;
+			// console.log(temp_lst);
+			
+        }
+		console.log(location_list);
+
 	});
 	
 </script> 
+
 
 
 <div class=" space-x-4 ">
@@ -51,12 +75,14 @@
 				name="select_location"
 				id="select_location"
 				bind:value={location}
-				class="text-2xl m-2 cursor-pointer"
-			>
+				class="text-2xl m-2 cursor-pointer">
 				<option disabled selected value> Select Location</option>
-				<option value="Amazon">Amazon</option>
-				<option value="Flipkart">Filpkart</option>
-				<option value="Snapdeal">Snapdeal</option>
+
+               {#each location_list as loc }
+                 <option value="{loc[2]}" title="{loc[0]}">{loc[1]}</option>
+   
+               {/each}
+				
 			</select>
 		</div>
 		<div class=" flex-1  m-8">
